@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<project name="flexmonkey_test" default="clean-build-test">
+
+    <!-- Passed in from caller -->
+	<fail unless="swc.undertest" message="swc.undertest must be passed in"/>
+	<fail unless="project.build.testOutputDirectory" message="project.build.testOutputDirectory must be passed in"/>
+	<fail unless="flex.home" message="flex.home must be passed in"/>
+	<fail unless="monkey.launch.app" message="monkey.launch.app must be passed in"/>
+	
+	<property name="swc.undertest.dir" value="${project.build.testOutputDirectory}/../../../${swc.undertest}/target"/>
+	
+	<!-- these shouldn't change-->
+	<property environment="env"/>
+
+	<property name="main" value="TestHarness"/>
+	<property name="test" value="TestRunner"/>
+	<property name="monkey.build.dir" value="${project.build.testOutputDirectory}"/>
+	<property name="src.dir" value="${project.build.sourceDirectory}/src"/>
+	
+	<property name="FLEX_HOME" value="${flex.home}"/>
+	<property name="flex.ant.loc" value="${flex.home}/ant"/>
+	<property name="monkey.url" value="file://${monkey.build.dir}"/>
+	<property name="docs.dir" value="${project.build.testOutputDirectory}/docs"/>
+	<property name="lib.dir" value="${project.build.sourceDirectory}/../Tools/FlexMonkey"/>
+	<property name="report.dir" value="${project.build.testOutputDirectory}/../surefire-reports"/>	
+	<property name="DEFAULT.LOCAL" value="en_US"/>
+	<property name="ENCODING" value="UTF-8"/>
+
+	<!-- snapshot directory management -->
+	<property name="snapshot.source.dir" value="${src.dir}/flexMonkey/snapshots"/>
+	<property name="snapshot.testrun.dir" value="${project.build.testOutputDirectory}/snapshots"/>
+
+	<!-- Load the flex tasks for compiling the actionScript code and running flexUnit --> 
+	<taskdef resource="flexTasks.tasks" classpath="${flex.ant.loc}/lib/flexTasks.jar"/> 
+	
+	<!-- Location of the Monkey ant tasks -->
+	<path id="libraries">
+	   <fileset dir="${lib.dir}">
+	      <include name="/**/*.jar"/>
+	   </fileset>
+	</path>
+	
+	<!-- Define the Monkey launcher ant task -->
+	<taskdef name="monkey-test-launcher"
+	   classname="com.gorillalogic.flexmonkey.anttask.MonkeyTestLauncherAntTask"
+	   classpathref="libraries" />
+	
+ 	<!-- Compile Flex files -->
+	<target name="clean">
+		<delete dir="${snapshot.testrun.dir}"/>
+	</target>
+	
+	<target name="compileTestSuitesModule" depends="clean" description="Compile the test suites module">
+		<mxmlc 
+			fork="true" 
+			maxmemory="1024m"
+			file="${src.dir}/flexMonkey/${test}.mxml"
+			output="${monkey.build.dir}/${test}.swf"
+			actionscript-file-encoding="${ENCODING}"
+			keep-generated-actionscript="false"
+			incremental="false"
+			as3="true"
+			debug="true">
+			  
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+			
+			<source-path path-element="${FLEX_HOME}/frameworks"/>
+			<source-path path-element="${src.dir}/flexMonkey"/>
+
+			<compiler.library-path dir="${FLEX_HOME}/frameworks" append="true">
+                <include name="libs" />
+                <include name="../bundles/{locale}" />
+			</compiler.library-path>			
+			
+			<compiler.library-path dir="${lib.dir}" append="true">
+				<include name="automation_monkey.swc" />
+			</compiler.library-path>
+			
+			<compiler.library-path dir="${FLEX_HOME}/frameworks/libs/automation" append="true">
+				<include name="automation_agent.swc"/>					
+			</compiler.library-path>				
+			
+		</mxmlc>
+	</target>	
+	
+	<target name="compileApplicationUnderTest"  depends="compileTestSuitesModule" description="Compile the application with the test runner linked in">
+		<mxmlc 
+			fork="true" 
+			maxmemory="1024m"
+			file="${src.dir}/main/${main}.mxml"
+			output="${monkey.build.dir}/${main}.swf"
+			actionscript-file-encoding="${ENCODING}"
+			keep-generated-actionscript="false"
+			incremental="false"
+			as3="true" 
+			debug="true">
+			  
+			<load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+			
+			<source-path path-element="${FLEX_HOME}/frameworks"/>
+			<source-path path-element="${src.dir}/main"/>
+
+			<compiler.library-path dir="${FLEX_HOME}/frameworks" append="true">
+                <include name="libs" />
+                <include name="../bundles/{locale}" />
+			</compiler.library-path>			
+			
+			<compiler.include-libraries dir="${swc.undertest.dir}" append="true">
+				<include name="*.swc" />
+			</compiler.include-libraries>	
+			
+			<compiler.include-libraries dir="${lib.dir}" append="true">
+				<include name="automation_monkey.swc" />
+			</compiler.include-libraries>					
+			
+			<compiler.include-libraries dir="${FLEX_HOME}/frameworks/libs/automation" append="true">
+				<include name="automation.swc"/>	
+				<include name="automation_agent.swc"/>	
+				<include name="automation_spark.swc"/>	
+				<include name="automation_dmv.swc"/>	
+			</compiler.include-libraries>
+			
+		</mxmlc>		
+	</target>
+	
+	<target name="wrapper" >	
+		<html-wrapper
+	        title="FlexMonkey Testing"
+	        file="${main}.html"
+	        height="100%"
+	        width="100%"
+	        bgcolor="#ffffff"
+	        application="${main}"
+	        swf="${main}"
+	        version-major="9"
+	        version-minor="0"
+	        version-revision="0"
+	        history="false"
+	        output="${monkey.build.dir}"/>
+	</target>	
+
+	<!-- Run the Tests -->
+	<target name="checkSnapshots">
+		<available file="${snapshot.source.dir}" property="snapshots.present"/>
+		<echo message="snapshot.source.dir=${snapshot.source.dir} snapshots.present=${snapshots.present}"/>
+	</target>
+
+	<target name="copySnapshots" depends="checkSnapshots" if="snapshots.present">
+		<copy todir="${snapshot.testrun.dir}" overwrite="true">
+			<fileset dir="${snapshot.source.dir}"/>
+		</copy>
+	</target>
+
+	<target name="initTest" depends="copySnapshots,wrapper">
+		<mkdir dir="${report.dir}" />
+	</target>
+
+	<target name="test-with-launcher" depends="initTest">       
+	   <monkey-test-launcher
+          timeout="0"
+          launcher="${monkey.launch.app} ${monkey.url}/${main}.html?antRun=true&amp;debug=true"
+	   	  targetSwf="no.swf"
+          testModuleSwf="${test}.swf"
+	      snapshotDir="${snapshot.testrun.dir}"
+          toDir="${report.dir}" 
+          haltonfailure="true" 
+	   		closeBrowser="true"/>
+	</target>
+	
+	<target name="clean-build-test" depends="compileApplicationUnderTest,test-with-launcher"/>		
+	
+</project>

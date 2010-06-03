@@ -1,0 +1,5 @@
+<project>
+  <targetSWF url="file:///C:/Workspace_ITP/trunk/Components.DealTicket.AcceptanceTests/target/test-classes/TestHarness.swf" width="640" height="480" commMode="targetSWFWindow" useFlashVars="false"/>
+  <flashVars/>
+  <generatedCode url="file:///C:/Workspace_ITP/trunk/Components.DealTicket.AcceptanceTests/src/flexMonkey" suitesPackageName="testSuites"/>
+</project>

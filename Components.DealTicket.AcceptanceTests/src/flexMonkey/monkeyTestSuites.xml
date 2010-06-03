@@ -1,0 +1,46 @@
+<TopNode>
+  <TestSuite name="Deal Ticket Suite" description="null">
+    <TestCase name="Buy Button" description="null">
+      <Test name="Error shown when attempt buy no quanity" description="Test buy order" defaultThinkTime="500">
+        <UIEvent command="SelectText" value="quantityTextBox" prop="automationName">
+          <arg value="9"/>
+          <arg value="0"/>
+        </UIEvent>
+        <UIEvent command="Type" value="quantityTextBox" prop="automationName">
+          <arg value="DELETE"/>
+        </UIEvent>
+        <UIEvent command="Click" value="BUY" prop="automationName"/>
+        <Verify description="New Verify" isRetryable="false" delay="0" attempts="1" snapshotURL="BFD47318-D43E-3EAD-E6B1-B05B4C2525E5.snp" value="Quantity must be greater than 0" prop="automationName" verifyBitmap="false" verifyBitmapFuzziness="0">
+          <Attribute name="automationName" expectedValue="Quantity must be greater than 0" actualValue="Quantity must be greater than 0" type="property"/>
+        </Verify>
+        <UIEvent command="SelectText" value="quantityTextBox" prop="automationName">
+          <arg value="0"/>
+          <arg value="0"/>
+        </UIEvent>
+        <UIEvent command="Input" value="quantityTextBox" prop="automationName">
+          <arg value="100"/>
+        </UIEvent>
+        <UIEvent command="Click" value="BUY" prop="automationName"/>
+        <Verify description="New Verify" isRetryable="false" delay="0" attempts="1" snapshotURL="63FF575A-289B-A7F8-C94E-B05BA5B30401.snp" value="BUY order placed" prop="automationName" verifyBitmap="false" verifyBitmapFuzziness="0">
+          <Attribute name="automationName" expectedValue="BUY order placed" actualValue="BUY order placed" type="property"/>
+        </Verify>
+      </Test>
+      <Test name="NewTest" description="null" defaultThinkTime="500">
+        <UIEvent command="SelectText" value="quantityTextBox" prop="automationName">
+          <arg value="3"/>
+          <arg value="0"/>
+        </UIEvent>
+        <UIEvent command="Type" value="quantityTextBox" prop="automationName">
+          <arg value="BACKSPACE"/>
+        </UIEvent>
+        <UIEvent command="Input" value="quantityTextBox" prop="automationName">
+          <arg value="50"/>
+        </UIEvent>
+        <UIEvent command="Click" value="SELL" prop="automationName"/>
+        <Verify description="New Verify" isRetryable="false" delay="0" attempts="1" snapshotURL="48797C2F-45AF-1344-B1E4-B062F0F7EC5F.snp" value="SELL order placed" prop="automationName" verifyBitmap="false" verifyBitmapFuzziness="0">
+          <Attribute name="automationName" expectedValue="SELL order placed" actualValue="SELL order placed" type="property"/>
+        </Verify>
+      </Test>
+    </TestCase>
+  </TestSuite>
+</TopNode>

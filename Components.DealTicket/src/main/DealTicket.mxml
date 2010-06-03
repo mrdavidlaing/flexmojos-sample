@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="302" height="168"
+		 creationComplete="onCeationCompleteHandler(event)">
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			protected function onCeationCompleteHandler(event:FlexEvent):void
+			{
+				var results:ArrayCollection = new ArrayCollection();
+				results.addItem("DealTicket loaded");
+				resultsList.dataProvider = results;
+			}
+			
+			protected function buyButton_clickHandler(event:MouseEvent):void
+			{
+				if (quantityTextBox.text == "")
+				{
+					resultsList.dataProvider.addItemAt("Quantity must be greater than 0",0);
+					return;
+				}
+				resultsList.dataProvider.addItemAt("BUY order placed",0);
+			}
+
+			protected function sellButton_clickHandler(event:MouseEvent):void
+			{
+				if (quantityTextBox.text == "")
+				{
+					resultsList.dataProvider.addItemAt("Quantity must be greater than 0",0);
+					return;
+				}
+				resultsList.dataProvider.addItemAt("SELL order placed",0);
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:Button x="20" y="54" label="BUY" id="buyButton" chromeColor="#189733" width="109" height="48" color="#FFFFFF" fontWeight="bold" fontSize="22" click="buyButton_clickHandler(event)"/>
+	<s:Button x="163" y="54" label="SELL" id="sellButton" chromeColor="#D31D1D" width="112" height="48" fontWeight="bold" fontSize="22" color="#FFFFFF" click="sellButton_clickHandler(event)"/>
+	<mx:TextInput x="93" y="28" id="quantityTextBox"/>
+	<s:Label x="22" y="28" text="Quantity" id="quantityLabel"/>
+	<s:List x="22" y="110" width="255" height="48" id="resultsList"></s:List>
+</s:Group>

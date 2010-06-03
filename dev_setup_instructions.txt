@@ -1,0 +1,15 @@
+========Install Maven 2========
+1) Install Maven 2 to C:\Program Files\apache-maven-2.2.1 from http://maven.apache.org/download.html
+2) add C:\Program Files\apache-maven-2.2.1\bin to path
+3) SET M2_HOME = C:\Program Files\apache-maven-2.2.1
+4) Add c:\Users\<your name>\.m2\settings.xml containing <settings></settings>
+5) "mvn --version" should work
+
+=======Setting up FlashBuilder4=======
+1) We're using FlashBuilder 4 premium (Eclipse plugin version, using the build in Eclipse)
+
+======Setup FlexMonkey =====
+1) Run Tools/FlexMonkey/FlexMonkey4.0_Beta1.1.air
+
+======Run command line mvn build=====
+1) Copy TEMPATE-pom.local.properties to pom.local.properties and correct settings for your environment

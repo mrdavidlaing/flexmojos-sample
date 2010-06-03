@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright 2008 Marvin Herman Froeder
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mrdavidlaing</groupId>
+  <artifactId>FlexShell</artifactId>
+  <name>FlexShell</name>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <modules>
+	<module>Components.DealTicket</module>
+	<module>Components.DealTicket.AcceptanceTests</module>
+  </modules>
+  
+   <properties>
+    <flex.version>4.1.0.15646</flex.version>
+	<flashplayer.version.major>10.0</flashplayer.version.major>
+	<flashplayer.version.minor>0</flashplayer.version.minor>
+	<flexunit.version>4.0-rc-1</flexunit.version>
+	<flexmojos.version>3.6.1</flexmojos.version>   <!--<flexmojos.version>3.7-SNAPSHOT</flexmojos.version>-->
+	<sonar.language>flex</sonar.language>
+    <sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
+	<flex.home>C:\\Program Files\\Adobe\\Adobe Flash Builder 4 Plug-in\\sdks\\4.0.0</flex.home>
+	<monkey.launch.app>C:\\Program Files\\Mozilla Firefox\\firefox.exe</monkey.launch.app>
+	<root.basedir>${project.basedir}</root.basedir>
+  </properties>
+
+  <build>
+    <sourceDirectory>.</sourceDirectory>
+	<plugins>
+	<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.0-alpha-1</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+              	<file>${root.basedir}/pom.local.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+	 </plugins>
+  </build>
+  
+  <dependencies>
+	  <dependency>
+		<groupId>org.codehaus.mojo</groupId>
+		<artifactId>properties-maven-plugin</artifactId>
+		<version>1.0-alpha-1</version>
+	  </dependency>
+	</dependencies>
+  
+  <!--  specify the flex-mojos repositories (can also be done in settings.xml)-->
+  <repositories>
+    <repository>
+      <id>flex-mojos-repository</id>
+      <url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+	  <releases> 
+		<enabled>true</enabled> 
+	  </releases>
+      <snapshots> 
+		<enabled>true</enabled>
+	  </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>flex-mojos-repository</id>
+      <url>http://repository.sonatype.org/content/groups/flexgroup/</url>
+	  <releases> 
+		<enabled>true</enabled> 
+	  </releases>
+      <snapshots> 
+		<enabled>true</enabled>
+	  </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+        <id>flexpmd.opensource.adobe</id>
+	    <releases>
+	        <enabled>true</enabled>
+    	    </releases>
+	    <snapshots>
+	        <enabled>false</enabled>
+	    </snapshots>
+	    <name>FlexPMD repository on opensource.adobe.com</name>
+	    <url>http://opensource.adobe.com/svn/opensource/flexpmd/maven-repository/release/</url>	
+    </pluginRepository>
+
+  </pluginRepositories>
+  
+</project>
