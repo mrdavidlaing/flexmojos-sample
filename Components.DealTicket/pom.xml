@@ -24,12 +24,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>mrdavidlaing</groupId>
   <artifactId>Components.DealTicket</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>swc</packaging>
-
   <name>Components.DealTicket</name>
+  <packaging>swc</packaging>
   
   <properties>
   	<root.basedir>${project.parent.basedir}</root.basedir>

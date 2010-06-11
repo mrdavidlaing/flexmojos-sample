@@ -36,28 +36,34 @@
 	<flexmojos.version>3.6.1</flexmojos.version>   <!--<flexmojos.version>3.7-SNAPSHOT</flexmojos.version>-->
 	<sonar.language>flex</sonar.language>
     <sonar.dynamicAnalysis>false</sonar.dynamicAnalysis>
-	<flex.home>C:\\Program Files\\Adobe\\Adobe Flash Builder 4 Plug-in\\sdks\\4.0.0</flex.home>
-	<monkey.launch.app>C:\\Program Files\\Mozilla Firefox\\firefox.exe</monkey.launch.app>
 	<root.basedir>${project.basedir}</root.basedir>
   </properties>
 
   <build>
     <sourceDirectory>.</sourceDirectory>
 	<plugins>
-	<plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-        <version>1.0-alpha-1</version>
+		<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.0-beta-1</version>
         <executions>
           <execution>
-            <phase>initialize</phase>
+            <id>enforce-property</id>
             <goals>
-              <goal>read-project-properties</goal>
+              <goal>enforce</goal>
             </goals>
             <configuration>
-              <files>
-              	<file>${root.basedir}/pom.local.properties</file>
-              </files>
+              <rules>
+				<requireProperty>
+					<property>env.M2_FLEX_HOME</property>					
+					<message>====&gt;Must set environment variable M2_FLEX_HOME to location of Flex SDK, eg: C:\Program Files (x86)\Adobe\Adobe Flash Builder 4 Plug-in\sdks\4.0.0</message>
+				</requireProperty>
+				<requireProperty>
+				  <property>env.M2_MONKEY_LAUNCH_APP</property>
+				  <message>====&gt;Must set environment variable M2_MONKEY_LAUNCH_APP to location of browser to launch tests in, eg: C:\Program Files (x86)\Mozilla Firefox\firefox.exe</message>
+				</requireProperty>
+              </rules>
+              <fail>true</fail>
             </configuration>
           </execution>
         </executions>
@@ -70,6 +76,11 @@
 		<groupId>org.codehaus.mojo</groupId>
 		<artifactId>properties-maven-plugin</artifactId>
 		<version>1.0-alpha-1</version>
+	  </dependency>
+	  <dependency>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.0-beta-1</version>
 	  </dependency>
 	</dependencies>
   

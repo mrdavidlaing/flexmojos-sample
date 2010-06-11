@@ -36,7 +36,7 @@
 	<!-- Location of the Monkey ant tasks -->
 	<path id="libraries">
 	   <fileset dir="${lib.dir}">
-	      <include name="/**/*.jar"/>
+	      <include name="**/*.jar"/>
 	   </fileset>
 	</path>
 	

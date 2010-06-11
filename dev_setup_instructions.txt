@@ -5,11 +5,14 @@
 4) Add c:\Users\<your name>\.m2\settings.xml containing <settings></settings>
 5) "mvn --version" should work
 
+======Run command line mvn build=====
+1) configure M2_FLEX_HOME environment variable to location of Flex SDK
+2) configure M2_MONKEY_LAUNCHER_APP environment variable to location of Firefox.exe
+3) Run mvn install
+
 =======Setting up FlashBuilder4=======
 1) We're using FlashBuilder 4 premium (Eclipse plugin version, using the build in Eclipse)
 
 ======Setup FlexMonkey =====
 1) Run Tools/FlexMonkey/FlexMonkey4.0_Beta1.1.air
 
-======Run command line mvn build=====
-1) Copy TEMPATE-pom.local.properties to pom.local.properties and correct settings for your environment

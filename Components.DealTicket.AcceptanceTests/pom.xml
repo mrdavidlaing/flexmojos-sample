@@ -8,12 +8,10 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>mrdavidlaing</groupId>
   <artifactId>Components.DealTicket.AcceptanceTests</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <name>Components.DealTicket.AcceptanceTests</name>
   <packaging>pom</packaging>
 
-  <name>Components.DealTicket.AcceptanceTests</name>
   
   <properties>
     <component.undertest>Components.DealTicket</component.undertest>
@@ -24,7 +22,7 @@
     <dependency>
       <groupId>mrdavidlaing</groupId>
       <artifactId>${component.undertest}</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${project.parent.version}</version>
       <type>swc</type>
     </dependency>
  </dependencies>
@@ -44,8 +42,8 @@
 						<ant antfile="../Tools/FlexMonkey/runFlexMonkeyTests.xml">
 							<property name="swc.undertest" value="${component.undertest}" />
 							
-							<property name="flex.home" value="${flex.home}" />
-							<property name="monkey.launch.app" value="${monkey.launch.app}" />
+							<property name="flex.home" value="${env.M2_FLEX_HOME}" />
+							<property name="monkey.launch.app" value="${env.M2_MONKEY_LAUNCH_APP}" />
 							<property name="project.build.testOutputDirectory" value="${project.build.testOutputDirectory}" />
 							<property name="project.build.sourceDirectory" value="${project.build.sourceDirectory}" />
 						</ant>
