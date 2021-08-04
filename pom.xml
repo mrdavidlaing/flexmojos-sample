@@ -56,11 +56,11 @@
               <rules>
 				<requireProperty>
 					<property>env.M2_FLEX_HOME</property>					
-					<message>====&gt;Must set environment variable M2_FLEX_HOME to location of Flex SDK, eg: C:\Program Files (x86)\Adobe\Adobe Flash Builder 4 Plug-in\sdks\4.0.0</message>
+					<message>====>Must set environment variable M2_FLEX_HOME to location of Flex SDK, eg: C:\Program Files (x86)\Adobe\Adobe Flash Builder 4 Plug-in\sdks\4.0.0</message>
 				</requireProperty>
 				<requireProperty>
 				  <property>env.M2_MONKEY_LAUNCH_APP</property>
-				  <message>====&gt;Must set environment variable M2_MONKEY_LAUNCH_APP to location of browser to launch tests in, eg: C:\Program Files (x86)\Mozilla Firefox\firefox.exe</message>
+				  <message>====>Must set environment variable M2_MONKEY_LAUNCH_APP to location of browser to launch tests in, eg: C:\Program Files (x86)\Mozilla Firefox\firefox.exe</message>
 				</requireProperty>
               </rules>
               <fail>true</fail>
@@ -75,7 +75,7 @@
 	  <dependency>
 		<groupId>org.codehaus.mojo</groupId>
 		<artifactId>properties-maven-plugin</artifactId>
-		<version>1.0-alpha-1</version>
+		<version>1.0.0</version>
 	  </dependency>
 	  <dependency>
 		<groupId>org.apache.maven.plugins</groupId>
